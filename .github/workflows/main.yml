@@ -71,8 +71,11 @@ jobs:
           sed -i 's/8.2.1/8.5.2/g' build.gradle || true
           sed -i 's/compileSdkVersion = [0-9]*/compileSdkVersion = 35/g' variables.gradle || true
           sed -i 's/targetSdkVersion = [0-9]*/targetSdkVersion = 35/g' variables.gradle || true
-          if [ ! -d "app/src/main/res/mipmap-anydpi-v26" ]; then
+          if [ ! -f "app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" ]; then
             sed -i 's/@mipmap\/ic_launcher_round/@mipmap\/ic_launcher/g' app/src/main/AndroidManifest.xml || true
+          fi
+          if [ ! -f "app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" ]; then
+            sed -i 's/@mipmap\/ic_launcher/@drawable\/ic_launcher/g' app/src/main/AndroidManifest.xml || true
           fi
           ./gradlew assembleDebug
       - uses: actions/upload-artifact@v4
