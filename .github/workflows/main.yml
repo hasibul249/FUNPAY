@@ -56,7 +56,13 @@ jobs:
         continue-on-error: true
         run: npx @capacitor/assets generate --android --iconBackgroundColor "#1d4ed8" --iconBackgroundColorDark "#1d4ed8"
       - run: npx cap sync android
-      - run: cd android && chmod +x gradlew && ./gradlew assembleDebug
+      - run: |
+       cd android && chmod +x gradlew
+        sed -i 's/com.android.tools.build:gradle:8.2.1/com.android.tools.build:gradle:8.5.2/g' build.gradle || true
+        sed -i 's/8.2.1/8.5.2/g' build.gradle || true
+        sed -i 's/compileSdkVersion = [0-9]*/compileSdkVersion = 35/g' variables.gradle || true
+        sed -i 's/targetSdkVersion = [0-9]*/targetSdkVersion = 35/g' variables.gradle || true
+        ./gradlew assembleDebug
       - uses: actions/upload-artifact@v4
         with:
           name: FuNPaY-APK
