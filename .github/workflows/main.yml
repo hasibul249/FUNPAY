@@ -65,6 +65,7 @@ jobs:
       - name: Build APK with SDK 35
         run: |
           cd android
+          sed -i 's/gradle-[0-9.]*-all.zip/gradle-8.7-all.zip/g' gradle/wrapper/gradle-wrapper.properties || true
           chmod +x gradlew
           sed -i 's/com.android.tools.build:gradle:8.2.1/com.android.tools.build:gradle:8.5.2/g' build.gradle || true
           sed -i 's/8.2.1/8.5.2/g' build.gradle || true
